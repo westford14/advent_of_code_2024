@@ -10,8 +10,8 @@ go_library(
 go_test(
     name = "day1_test",
     srcs = ["day1_test.go"],
-    embed = [":day1"],
     data = glob([
         "data/**",
     ]),
+    embed = [":day1"],
 )
