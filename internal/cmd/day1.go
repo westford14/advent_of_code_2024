@@ -42,8 +42,8 @@ func runDayCmd() *cobra.Command {
 	flags := day1Flags{}
 	runDayCmd := &cobra.Command{
 		Use:   "day1",
-		Short: "Run the advent of code 2023 day 1 command",
-		Long:  "Run the advent of code 2023 day 1 command",
+		Short: "Run the advent of code 2024 day 1 command",
+		Long:  "Run the advent of code 2024 day 1 command",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return runDay1(cmd, args, flags)
 		},
