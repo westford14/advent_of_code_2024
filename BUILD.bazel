@@ -1,0 +1,74 @@
+load("@buildifier_prebuilt//:rules.bzl", "buildifier")
+load("@gazelle//:def.bzl", "DEFAULT_LANGUAGES", "gazelle", "gazelle_binary")
+load("@rules_go//go:def.bzl", "TOOLS_NOGO", "go_binary", "go_library", "nogo")
+
+# buildifier lints our bazel files
+# v. meta
+buildifier(
+    name = "buildifier.check",
+    exclude_patterns = [
+        "./.git/*",
+    ],
+    lint_mode = "warn",
+    mode = "diff",
+)
+
+buildifier(
+    name = "buildifier",
+    exclude_patterns = [
+        "./.git/*",
+    ],
+)
+
+# nogo is the static analyzer for go
+# https://github.com/bazel-contrib/rules_go/blob/master/go/nogo.rst
+# just using all the defaults at this moment because that seems okay.
+nogo(
+    name = "nogo",
+    visibility = ["//visibility:public"],
+    deps = TOOLS_NOGO,
+)
+
+# export our buf.yaml, go.mod and go.sum so rules
+# in other packages can see them
+exports_files([
+    "go.mod",
+    "go.sum",
+])
+
+# Bunch of gazelle configuration
+# gazelle does a lot of the heavy lifting in regards to generating and modifying
+# BUILD files in our package directories.
+# e.g. whenever you make a new proto or go library, running gazelle will generate
+# the necessary BUILD targets (and you BUILD file if it doesn't exist), so that we
+# don't have to
+#
+# https://github.com/bazel-contrib/bazel-gazelle/blob/master/README.rst
+# included a bunch of resolve declarations for things we are likely to use
+
+gazelle_binary(
+    name = "gazelle_binary",
+    languages = DEFAULT_LANGUAGES + [
+        "@gazelle//language/bazel/visibility",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+gazelle(
+    name = "gazelle",
+    gazelle = ":gazelle_binary",
+)
+
+go_library(
+    name = "advent2024_lib",
+    srcs = ["main.go"],
+    importpath = "github.com/westford14/advent2024",
+    visibility = ["//visibility:private"],
+    deps = ["//internal/cmd"],
+)
+
+go_binary(
+    name = "advent2024",
+    embed = [":advent2024_lib"],
+    visibility = ["//visibility:public"],
+)

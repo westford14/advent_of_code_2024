@@ -1,0 +1,15 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "cmd",
+    srcs = [
+        "day1.go",
+        "main.go",
+    ],
+    importpath = "github.com/westford14/advent2024/internal/cmd",
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "//internal/day1",
+        "@com_github_spf13_cobra//:cobra",
+    ],
+)

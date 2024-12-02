@@ -1,0 +1,10 @@
+sh_binary(
+    name = "go_fix",
+    srcs = ["fix.sh"],
+    data = [
+        "//:go.mod",
+        "//:go.sum",
+        "@go_sdk//:files",
+        "@go_sdk//:tools",
+    ],
+)

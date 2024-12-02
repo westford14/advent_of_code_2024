@@ -1,0 +1,33 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+exports_files(
+    ["gofmt.sh"],
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "go_verify",
+    srcs = ["main.go"],
+    importpath = "github.com/westford14/advent2024/bzl_tools/go_verify",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@gazelle//config",
+        "@gazelle//label",
+        "@gazelle//language",
+        "@gazelle//repo",
+        "@gazelle//resolve",
+        "@gazelle//rule",
+    ],
+)
+
+sh_test(
+    name = "go_fmt_verify",
+    srcs = ["//bzl_tools/go_verify:gofmt.sh"],
+    data = [
+        "main.go",
+        "//:go.mod",
+        "//:go.sum",
+        "@go_sdk//:files",
+        "@go_sdk//:tools",
+    ],
+)

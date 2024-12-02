@@ -1,0 +1,29 @@
+name: Base CI Checks
+on:
+  # https://help.github.com/en/actions/reference/events-that-trigger-workflows#pull-request-event-pull_request
+  pull_request:
+    types: [opened, synchronize, reopened]
+    # Only run for PRs with main as base branch
+    branches:
+      - main
+
+jobs:
+  test:
+    name: Run style and type checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: setup bazel
+        id: bazel-setup
+        run: |
+          ARCH=$([[ "$(uname -m)" == "arm64" ]] || [[ "$(uname -m)" = "aarch64" ]] && echo "arm64" || echo "amd64")
+          wget -O bazelisk https://github.com/bazelbuild/bazelisk/releases/download/v1.24.0/bazelisk-linux-${ARCH}
+          chmod +x ./bazelisk
+          sudo mv ./bazelisk /usr/local/bin/bazel
+
+      - name: build bazel
+        run: bazel build //...
+
+      - name: test
+        run: bazel test //... --test_output=all
