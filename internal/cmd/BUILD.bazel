@@ -5,6 +5,7 @@ go_library(
     srcs = [
         "day1.go",
         "day2.go",
+        "day3.go",
         "main.go",
     ],
     importpath = "github.com/westford14/advent2024/internal/cmd",
@@ -12,6 +13,7 @@ go_library(
     deps = [
         "//internal/day1",
         "//internal/day2",
+        "//internal/day3",
         "@com_github_spf13_cobra//:cobra",
     ],
 )
