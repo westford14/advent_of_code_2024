@@ -9,14 +9,14 @@ import (
 	"strings"
 )
 
-func Execute(path, part string) (int, error) {
+func Execute(path string, part int) (int, error) {
 	switch part {
-	case "part1":
+	case 1:
 		return ExecutePart1(path)
-	case "part2":
+	case 2:
 		return ExecutePart2(path)
 	default:
-		return 0, fmt.Errorf("did not understand %s", part)
+		return 0, fmt.Errorf("did not understand %d", part)
 	}
 }
 

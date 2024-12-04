@@ -3,7 +3,7 @@ package day2
 import "testing"
 
 func TestDay2Part1(t *testing.T) {
-	got, err := Execute("data/input.txt", "part1")
+	got, err := Execute("data/input.txt", 1)
 	if err != nil {
 		t.Error(err)
 	}
@@ -15,7 +15,7 @@ func TestDay2Part1(t *testing.T) {
 }
 
 func TestDay2Part2(t *testing.T) {
-	got, err := Execute("data/input.txt", "part2")
+	got, err := Execute("data/input.txt", 2)
 	if err != nil {
 		t.Error(err)
 	}
