@@ -3,9 +3,7 @@ load("@rules_go//go:def.bzl", "go_library")
 go_library(
     name = "cmd",
     srcs = [
-        "day1.go",
-        "day2.go",
-        "day3.go",
+        "day.go",
         "main.go",
     ],
     importpath = "github.com/westford14/advent2024/internal/cmd",
@@ -14,6 +12,7 @@ go_library(
         "//internal/day1",
         "//internal/day2",
         "//internal/day3",
+        "//internal/day4",
         "@com_github_spf13_cobra//:cobra",
     ],
 )
