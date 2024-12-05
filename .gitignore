@@ -1,3 +1,4 @@
 data/*
 bazel-*
 .vscode/
+**/[Ff]ull_input*
