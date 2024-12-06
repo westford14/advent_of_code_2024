@@ -10,6 +10,7 @@ import (
 	"github.com/westford14/advent2024/internal/day3"
 	"github.com/westford14/advent2024/internal/day4"
 	"github.com/westford14/advent2024/internal/day5"
+	"github.com/westford14/advent2024/internal/day6"
 )
 
 type dayFlags struct {
@@ -79,6 +80,8 @@ func runDay(cmd *cobra.Command, args []string, flags dayFlags) error {
 		ans, err = day4.Execute(flags.file, flags.part)
 	case 5:
 		ans, err = day5.Execute(flags.file, flags.part)
+	case 6:
+		ans, err = day6.Execute(flags.file, flags.part)
 	default:
 		ans = 0
 		err = fmt.Errorf("did not understand %d", flags.day)

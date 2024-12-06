@@ -6,5 +6,6 @@
 * bazel run @rules_go//go mod tidy
 * bazel mod tidy
 * bazel run //:gazelle
+* bazel run //:buildifier.check
 * bazel build //...
 * bazel test //... --test_output=all
