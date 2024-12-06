@@ -25,5 +25,16 @@ jobs:
       - name: build bazel
         run: bazel build //...
 
+      - name: gazelle
+        run: |
+          bazel run //:gazelle
+          git status
+          if [[ `git status --porcelain` ]]; then
+            exit 1
+          fi
+
+      - name: buildifier
+        run: bazel run //:buildifier.check
+
       - name: test
         run: bazel test //... --test_output=all
