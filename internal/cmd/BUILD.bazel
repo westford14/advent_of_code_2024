@@ -16,6 +16,7 @@ go_library(
         "//internal/day5",
         "//internal/day6",
         "//internal/day7",
+        "//internal/day8",
         "@com_github_spf13_cobra//:cobra",
     ],
 )
