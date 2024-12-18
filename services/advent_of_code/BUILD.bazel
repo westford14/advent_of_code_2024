@@ -1,0 +1,19 @@
+load("@rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "advent_of_code_lib",
+    srcs = ["main.go"],
+    importpath = "github.com/westford14/advent_of_code_2024/services/advent_of_code",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//proto/advent_of_code/v1:advent_of_code_v1_go_proto",
+        "//services/advent_of_code/internal/rpcsrv",
+        "@org_golang_google_grpc//:grpc",
+    ],
+)
+
+go_binary(
+    name = "advent_of_code",
+    embed = [":advent_of_code_lib"],
+    visibility = ["//visibility:public"],
+)

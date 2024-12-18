@@ -2,3 +2,4 @@ data/*
 bazel-*
 .vscode/
 **/[Ff]ull_input*
+pkg/gen/*

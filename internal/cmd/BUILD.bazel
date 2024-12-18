@@ -6,7 +6,7 @@ go_library(
         "day.go",
         "main.go",
     ],
-    importpath = "github.com/westford14/advent2024/internal/cmd",
+    importpath = "github.com/westford14/advent_of_code_2024/internal/cmd",
     visibility = ["//:__subpackages__"],
     deps = [
         "//internal/day1",

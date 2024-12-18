@@ -1,0 +1,5 @@
+load(":protofmt.bzl", "buf_format")
+
+buf_format(
+    name = "fmt",
+)

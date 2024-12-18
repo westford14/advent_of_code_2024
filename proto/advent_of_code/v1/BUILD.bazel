@@ -1,0 +1,41 @@
+load("@rules_buf//buf:defs.bzl", "buf_lint_test")
+load("@rules_go//proto:def.bzl", "go_proto_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("//bzl_tools/protogen_go_link:golink.bzl", "go_proto_link")
+
+proto_library(
+    name = "advent_of_code_v1_proto",
+    srcs = ["advent_of_code.proto"],
+    strip_import_prefix = "/proto",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@buf_deps//buf/validate:validate_proto",
+        "@buf_deps//google/api:visibility_proto",
+        "@com_google_protobuf//:struct_proto",
+    ],
+)
+
+go_proto_library(
+    name = "advent_of_code_v1_go_proto",
+    compilers = [
+        "@rules_go//proto:go_grpc",
+    ],
+    importpath = "github.com/westford14/advent_of_code_2024/pkg/gen/westford14/advent_of_code/v1",
+    proto = ":advent_of_code_v1_proto",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@build_buf_gen_go_bufbuild_protovalidate_protocolbuffers_go//buf/validate",
+        "@org_golang_google_genproto_googleapis_api//annotations",
+    ],
+)
+
+go_proto_link(
+    name = "advent_of_code_v1_go_proto_link",
+    dep = ":advent_of_code_v1_go_proto",
+)
+
+buf_lint_test(
+    name = "advent_of_code_v1_proto_lint",
+    module = "proto",
+    targets = [":advent_of_code_v1_proto"],
+)

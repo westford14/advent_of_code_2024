@@ -898,7 +898,7 @@
     "@@rules_buf~//buf:extensions.bzl%buf": {
       "general": {
         "bzlTransitiveDigest": "oh9sfuHz6EDfXQFIWzj7h86yR1eX5qO+nOpRsGk6ch0=",
-        "usagesDigest": "iChhjoDUeYnQlhgqk+KHcPEFpwgRFAk8YuMaO7kZwmw=",
+        "usagesDigest": "HLBgW4rJCoarV7FLPHljE2VHsw6CeZMC1yFllMPgDwc=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -909,6 +909,17 @@
             "attributes": {
               "version": "v1.32.1",
               "sha256": ""
+            }
+          },
+          "buf_deps": {
+            "bzlFile": "@@rules_buf~//buf/internal:repo.bzl",
+            "ruleClassName": "buf_dependencies",
+            "attributes": {
+              "modules": [
+                "buf.build/bufbuild/protovalidate:a3320276596649bcad929ac829d451f4",
+                "buf.build/googleapis/googleapis:c0913f24652a4cfc95f77d97443a5005",
+                "buf.build/grpc-ecosystem/grpc-gateway:a48fcebcf8f140dd9d09359b9bb185a4"
+              ]
             }
           }
         },

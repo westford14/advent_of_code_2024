@@ -3,7 +3,7 @@ load("@rules_go//go:def.bzl", "go_library", "go_test")
 go_library(
     name = "day2",
     srcs = ["day2.go"],
-    importpath = "github.com/westford14/advent2024/internal/day2",
+    importpath = "github.com/westford14/advent_of_code_2024/internal/day2",
     visibility = ["//:__subpackages__"],
 )
 

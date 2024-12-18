@@ -8,6 +8,7 @@ import (
 	_ "github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2"
 	_ "google.golang.org/genproto/googleapis/api"
 
+	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
 	_ "golang.org/x/tools/cmd/goimports"
 )
 

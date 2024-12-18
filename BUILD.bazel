@@ -32,6 +32,7 @@ nogo(
 # export our buf.yaml, go.mod and go.sum so rules
 # in other packages can see them
 exports_files([
+    "buf.yaml",
     "go.mod",
     "go.sum",
 ])
@@ -46,6 +47,23 @@ exports_files([
 # https://github.com/bazel-contrib/bazel-gazelle/blob/master/README.rst
 # included a bunch of resolve declarations for things we are likely to use
 
+# gazelle:prefix github.com/westford14/advent_of_code_2024
+# gazelle:go_grpc_compilers @rules_go//proto:go_grpc
+
+# gazelle:resolve proto buf/validate/validate.proto @buf_deps//buf/validate:validate_proto
+# gazelle:resolve proto go buf/validate/validate.proto @build_buf_gen_go_bufbuild_protovalidate_protocolbuffers_go//buf/validate
+# gazelle:resolve proto google/protobuf/timestamp.proto @com_google_protobuf//:timestamp_proto
+# gazelle:resolve proto go google/protobuf/timestamp.proto @org_golang_google_protobuf//types/known/timestamppb
+# gazelle:resolve proto proto google/api/annotations.proto @buf_deps//google/api:visibility_proto
+# gazelle:resolve proto go google/api/annotations.proto  @org_golang_google_genproto_googleapis_api//annotations
+# gazelle:resolve proto proto google/api/http.proto @buf_deps//google/api:visibility_proto
+# gazelle:resolve proto go google/api/http.proto  @org_golang_google_genproto_googleapis_api//annotations
+# gazelle:resolve proto proto google/api/visibility.proto @buf_deps//google/api:visibility_proto
+# gazelle:resolve proto go google/api/visibility.proto  @org_golang_google_genproto_googleapis_api//visibility
+# gazelle:resolve proto proto google/rpc/status.proto @googleapis//google/rpc:status_proto
+# gazelle:resolve proto go google/rpc/status.proto  @org_golang_google_genproto_googleapis_rpc//status
+
+# gazelle:exclude pkg/gen
 gazelle_binary(
     name = "gazelle_binary",
     languages = DEFAULT_LANGUAGES + [
@@ -60,15 +78,15 @@ gazelle(
 )
 
 go_library(
-    name = "advent2024_lib",
+    name = "advent_of_code_2024_lib",
     srcs = ["main.go"],
-    importpath = "github.com/westford14/advent2024",
+    importpath = "github.com/westford14/advent_of_code_2024",
     visibility = ["//visibility:private"],
     deps = ["//internal/cmd"],
 )
 
 go_binary(
-    name = "advent2024",
-    embed = [":advent2024_lib"],
+    name = "advent_of_code_2024",
+    embed = [":advent_of_code_2024_lib"],
     visibility = ["//visibility:public"],
 )

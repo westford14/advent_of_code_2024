@@ -5,7 +5,7 @@ import (
 	"os"
 	"os/signal"
 
-	"github.com/westford14/advent2024/internal/cmd"
+	"github.com/westford14/advent_of_code_2024/internal/cmd"
 )
 
 func main() {

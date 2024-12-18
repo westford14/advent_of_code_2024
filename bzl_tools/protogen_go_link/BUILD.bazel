@@ -1,14 +1,9 @@
 load("@rules_go//go:def.bzl", "go_library")
 
-exports_files(
-    ["gofmt.sh"],
-    visibility = ["//visibility:public"],
-)
-
 go_library(
-    name = "go_verify",
+    name = "protogen_go_link",
     srcs = ["main.go"],
-    importpath = "github.com/westford14/advent_of_code_2024/bzl_tools/go_verify",
+    importpath = "github.com/westford14/advent_of_code_2024/bzl_tools/protogen_go_link",
     visibility = ["//visibility:public"],
     deps = [
         "@gazelle//config",
@@ -30,4 +25,9 @@ sh_test(
         "@go_sdk//:tools",
         "@org_golang_x_tools//cmd/goimports",
     ],
+)
+
+exports_files(
+    ["copy_into_workspace.sh"],
+    visibility = ["//visibility:public"],
 )
