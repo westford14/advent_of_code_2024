@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package advent_of_code.v1;
+
+import "google/api/annotations.proto";
+
+option go_package = "github.com/westford14/advent_of_code_2024/pkg/gen/advent_of_code_2024/day/v1;day_v1";
+
+service AdventService {
+  rpc Day(DayRequest) returns (DayResponse) {
+    option (google.api.http) = {
+      post: "/v1/advent/day"
+      body: "*"
+    };
+  }
+}
+
+message DayRequest {
+  int32 day_id = 1;
+  bytes file = 2;
+}
+
+message DayResponse {
+  int64 answer = 1;
+}

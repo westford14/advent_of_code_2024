@@ -46,13 +46,17 @@ register_toolchains("@go_sdk//:all")
 
 go_deps = use_extension("@gazelle//:extensions.bzl", "go_deps")
 go_deps.from_file(go_mod = "//:go.mod")
-use_repo(go_deps, "com_github_grpc_ecosystem_grpc_gateway_v2", "com_github_mowshon_iterium", "com_github_spf13_cobra", "org_golang_google_genproto_googleapis_api", "org_golang_x_tools")
+use_repo(go_deps, "build_buf_gen_go_bufbuild_protovalidate_protocolbuffers_go", "com_github_bufbuild_protovalidate_go", "com_github_grpc_ecosystem_grpc_gateway_v2", "com_github_mowshon_iterium", "com_github_spf13_cobra", "org_golang_google_genproto_googleapis_api", "org_golang_google_grpc", "org_golang_google_protobuf", "org_golang_x_tools")
 
 # We will be using buf for linting proto files and such
 buf = use_extension("@rules_buf//buf:extensions.bzl", "buf")
+buf.dependency(module = "buf.build/bufbuild/protovalidate:a3320276596649bcad929ac829d451f4")
+buf.dependency(module = "buf.build/googleapis/googleapis:c0913f24652a4cfc95f77d97443a5005")
+buf.dependency(module = "buf.build/grpc-ecosystem/grpc-gateway:a48fcebcf8f140dd9d09359b9bb185a4")
 
 # Override the default version of buf
 buf.toolchains(version = "v1.32.1")
+use_repo(buf, "buf_deps")
 
 # OCI is gives us rules to build and push images
 oci = use_extension("@rules_oci//oci:extensions.bzl", "oci")

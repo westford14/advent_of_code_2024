@@ -1,0 +1,14 @@
+version: v2
+clean: true
+plugins:
+  - remote: buf.build/grpc/go:v1.5.1
+    out: pkg/gen
+    opt:
+      - paths=source_relative
+  # dependencies
+  - remote: buf.build/protocolbuffers/go:v1.34.2
+    out: pkg/gen
+    opt:
+      - paths=source_relative
+inputs:
+  - directory: proto

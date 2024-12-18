@@ -1,8 +1,7 @@
-package go_verify
+package protogen_go_link
 
 import (
 	"flag"
-	"strings"
 
 	"github.com/bazelbuild/bazel-gazelle/config"
 	"github.com/bazelbuild/bazel-gazelle/label"
@@ -19,27 +18,22 @@ func NewLanguage() language.Language {
 }
 
 func (x *xlang) Name() string {
-	return "go_fmt_verify"
+	return "go_proto_link"
 }
 
 func (x *xlang) Kinds() map[string]rule.KindInfo {
 	return map[string]rule.KindInfo{
-		"sh_test": {
-			MatchAttrs: []string{"srcs"},
-			NonEmptyAttrs: map[string]bool{
-				"data": true,
-				"size": true,
-			},
-			MergeableAttrs: map[string]bool{
-				"data": true,
-				"size": true,
-			},
-		},
+		"go_proto_link": {},
 	}
 }
 
 func (x *xlang) Loads() []rule.LoadInfo {
-	return []rule.LoadInfo{}
+	return []rule.LoadInfo{
+		{
+			Name:    "//bzl_tools/protogen_go_link:golink.bzl",
+			Symbols: []string{"go_proto_link"},
+		},
+	}
 }
 
 func (x *xlang) RegisterFlags(fs *flag.FlagSet, cmd string, c *config.Config) {
@@ -59,26 +53,13 @@ func (x *xlang) Configure(c *config.Config, rel string, f *rule.File) {
 func (x *xlang) GenerateRules(args language.GenerateArgs) language.GenerateResult {
 	rules := make([]*rule.Rule, 0)
 	imports := make([]interface{}, 0)
-	goFiles := []string{}
-	for _, f := range args.RegularFiles {
-		if strings.HasSuffix(f, ".go") {
-			goFiles = append(goFiles, f)
-		}
-	}
-	if len(goFiles) == 0 {
-		return language.GenerateResult{}
-	}
-	goFiles = append(goFiles, "@go_sdk//:tools", "@org_golang_x_tools//cmd/goimports", "@go_sdk//:files")
 
 	for _, r := range args.OtherGen {
-		if r.Kind() == "go_library" {
-
-			verify := rule.NewRule("sh_test", "go_fmt_verify")
-
-			verify.SetAttr("srcs", []string{"//bzl_tools/go_verify:gofmt.sh"})
-			verify.SetAttr("data", goFiles)
-			verify.SetAttr("size", "small")
-			rules = append(rules, verify)
+		if r.Kind() == "go_proto_library" {
+			depName := r.Name()
+			nr := rule.NewRule("go_proto_link", r.Name()+"_link")
+			nr.SetAttr("dep", ":"+depName)
+			rules = append(rules, nr)
 			imports = append(imports, nil)
 		}
 	}
@@ -90,6 +71,7 @@ func (x *xlang) GenerateRules(args language.GenerateArgs) language.GenerateResul
 }
 
 func (x *xlang) Fix(c *config.Config, f *rule.File) {
+	// Do any migrations here
 }
 
 func (x *xlang) Imports(c *config.Config, r *rule.Rule, f *rule.File) []resolve.ImportSpec {

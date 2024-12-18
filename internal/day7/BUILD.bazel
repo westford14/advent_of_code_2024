@@ -3,7 +3,7 @@ load("@rules_go//go:def.bzl", "go_library", "go_test")
 go_library(
     name = "day7",
     srcs = ["day7.go"],
-    importpath = "github.com/westford14/advent2024/internal/day7",
+    importpath = "github.com/westford14/advent_of_code_2024/internal/day7",
     visibility = ["//:__subpackages__"],
     deps = ["@com_github_mowshon_iterium//:iterium"],
 )

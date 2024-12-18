@@ -3,19 +3,16 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-export PATH="$PATH:`realpath external/rules_go~~go_sdk~go_sdk/bin/`"
 gofmt="external/rules_go~~go_sdk~go_sdk/bin/gofmt"
 if [[ ! -x "${gofmt}" ]]; then
   gofmt=$(which gofmt)
 fi
-golang="external/rules_go~~go_sdk~go_sdk/bin/go"
-if [[ ! -x "${golang}" ]]; then
-  golang=$(which go)
+goimports="external/gazelle~~go_deps~org_golang_x_tools/cmd/goimports/goimports_/goimports"
+if [[ ! -x "${goimports}" ]]; then
+  goimports=$(which goimports)
 fi
-export GOPATH=$(pwd -P)
-mkdir -p $GOPATH
-export GOCACHE="$(mktemp -d)"
-trap "rm -rf '${GOCACHE}'" EXIT
+gopath=$(realpath external/rules_go~~go_sdk~go_sdk/bin)
+export PATH="${gopath}:$PATH"
 
 diff=$(find . -name "*.go" | grep -v "\/external\/" | grep -v 'pkg/mod' | xargs "${gofmt}" -d 2>&1)
 if [[ -n "${diff}" ]]; then
@@ -24,7 +21,7 @@ if [[ -n "${diff}" ]]; then
     exit 1
 fi
 
-diff=$(find . -name "*.go" | grep -v "\/external\/" | grep -v 'pkg/mod' | xargs "${golang}" run golang.org/x/tools/cmd/goimports -local github.com/Metronome-Industries/usage-service -d)
+diff=$(find . -name "*.go" | grep -v "\/external\/" | grep -v 'pkg/mod' | xargs "${goimports}" -local github.com/westford14/advent_of_code_2024 -d)
 if [[ -n "${diff}" ]]; then
     echo "GO IMPORTS DIFF"
     echo "${diff}"

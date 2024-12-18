@@ -1,0 +1,14 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "rpcsrv",
+    srcs = ["rpcsrv.go"],
+    importpath = "github.com/westford14/advent_of_code_2024/services/advent_of_code/internal/rpcsrv",
+    visibility = ["//services/advent_of_code:__subpackages__"],
+    deps = [
+        "//proto/advent_of_code/v1:advent_of_code_v1_go_proto",
+        "@com_github_bufbuild_protovalidate_go//:protovalidate-go",
+        "@org_golang_google_grpc//codes",
+        "@org_golang_google_grpc//status",
+    ],
+)

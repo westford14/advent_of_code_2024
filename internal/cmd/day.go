@@ -5,14 +5,14 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/westford14/advent2024/internal/day1"
-	"github.com/westford14/advent2024/internal/day2"
-	"github.com/westford14/advent2024/internal/day3"
-	"github.com/westford14/advent2024/internal/day4"
-	"github.com/westford14/advent2024/internal/day5"
-	"github.com/westford14/advent2024/internal/day6"
-	"github.com/westford14/advent2024/internal/day7"
-	"github.com/westford14/advent2024/internal/day8"
+	"github.com/westford14/advent_of_code_2024/internal/day1"
+	"github.com/westford14/advent_of_code_2024/internal/day2"
+	"github.com/westford14/advent_of_code_2024/internal/day3"
+	"github.com/westford14/advent_of_code_2024/internal/day4"
+	"github.com/westford14/advent_of_code_2024/internal/day5"
+	"github.com/westford14/advent_of_code_2024/internal/day6"
+	"github.com/westford14/advent_of_code_2024/internal/day7"
+	"github.com/westford14/advent_of_code_2024/internal/day8"
 )
 
 type dayFlags struct {
