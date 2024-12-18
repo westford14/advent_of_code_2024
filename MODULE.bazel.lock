@@ -1456,7 +1456,7 @@
     "@@rules_oci~//oci:extensions.bzl%oci": {
       "general": {
         "bzlTransitiveDigest": "ZEIlQuDU3/A7ie64Bgd8gc89e4M+ZZJgjlfscyI3Mck=",
-        "usagesDigest": "6BFHf26FU5n3HlmvGfDlEUqlYETYwZhA9CFGlR0HqnM=",
+        "usagesDigest": "hHyIG/lmVEAzemsWeS863lDVUuwHDDklov3xhEeZPhQ=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -1467,23 +1467,23 @@
             "attributes": {
               "scheme": "https",
               "registry": "gcr.io",
-              "repository": "distroless/base",
-              "identifier": "sha256:ccaef5ee2f1850270d453fdf700a5392534f8d1a8ca2acda391fbb6a06b81c86",
+              "repository": "distroless/base-debian12",
+              "identifier": "sha256:e9d0321de8927f69ce20e39bfc061343cce395996dfc1f0db6540e5145bc63a5",
               "platform": "linux/amd64",
               "target_name": "go_base_linux_amd64",
               "bazel_tags": []
             }
           },
-          "go_base_linux_arm64": {
+          "go_base_linux_arm64_v8": {
             "bzlFile": "@@rules_oci~//oci/private:pull.bzl",
             "ruleClassName": "oci_pull",
             "attributes": {
               "scheme": "https",
               "registry": "gcr.io",
-              "repository": "distroless/base",
-              "identifier": "sha256:ccaef5ee2f1850270d453fdf700a5392534f8d1a8ca2acda391fbb6a06b81c86",
-              "platform": "linux/arm64",
-              "target_name": "go_base_linux_arm64",
+              "repository": "distroless/base-debian12",
+              "identifier": "sha256:e9d0321de8927f69ce20e39bfc061343cce395996dfc1f0db6540e5145bc63a5",
+              "platform": "linux/arm64/v8",
+              "target_name": "go_base_linux_arm64_v8",
               "bazel_tags": []
             }
           },
@@ -1494,13 +1494,56 @@
               "target_name": "go_base",
               "scheme": "https",
               "registry": "gcr.io",
-              "repository": "distroless/base",
-              "identifier": "sha256:ccaef5ee2f1850270d453fdf700a5392534f8d1a8ca2acda391fbb6a06b81c86",
+              "repository": "distroless/base-debian12",
+              "identifier": "sha256:e9d0321de8927f69ce20e39bfc061343cce395996dfc1f0db6540e5145bc63a5",
               "platforms": {
                 "@@platforms//cpu:x86_64": "@go_base_linux_amd64",
-                "@@platforms//cpu:arm64": "@go_base_linux_arm64"
+                "@@platforms//cpu:arm64": "@go_base_linux_arm64_v8"
               },
               "bzlmod_repository": "go_base",
+              "reproducible": true
+            }
+          },
+          "ci_base_linux_amd64": {
+            "bzlFile": "@@rules_oci~//oci/private:pull.bzl",
+            "ruleClassName": "oci_pull",
+            "attributes": {
+              "scheme": "https",
+              "registry": "index.docker.io",
+              "repository": "cimg/base",
+              "identifier": "sha256:f906812e309afbb97ecdc4bdbe577f2f315e99f3bc3b03b3df6507e92bb804ab",
+              "platform": "linux/amd64",
+              "target_name": "ci_base_linux_amd64",
+              "bazel_tags": []
+            }
+          },
+          "ci_base_linux_arm64": {
+            "bzlFile": "@@rules_oci~//oci/private:pull.bzl",
+            "ruleClassName": "oci_pull",
+            "attributes": {
+              "scheme": "https",
+              "registry": "index.docker.io",
+              "repository": "cimg/base",
+              "identifier": "sha256:f906812e309afbb97ecdc4bdbe577f2f315e99f3bc3b03b3df6507e92bb804ab",
+              "platform": "linux/arm64",
+              "target_name": "ci_base_linux_arm64",
+              "bazel_tags": []
+            }
+          },
+          "ci_base": {
+            "bzlFile": "@@rules_oci~//oci/private:pull.bzl",
+            "ruleClassName": "oci_alias",
+            "attributes": {
+              "target_name": "ci_base",
+              "scheme": "https",
+              "registry": "index.docker.io",
+              "repository": "cimg/base",
+              "identifier": "sha256:f906812e309afbb97ecdc4bdbe577f2f315e99f3bc3b03b3df6507e92bb804ab",
+              "platforms": {
+                "@@platforms//cpu:x86_64": "@ci_base_linux_amd64",
+                "@@platforms//cpu:arm64": "@ci_base_linux_arm64"
+              },
+              "bzlmod_repository": "ci_base",
               "reproducible": true
             }
           },
@@ -1902,7 +1945,10 @@
           "explicitRootModuleDirectDeps": [
             "go_base",
             "go_base_linux_amd64",
-            "go_base_linux_arm64"
+            "go_base_linux_arm64_v8",
+            "ci_base",
+            "ci_base_linux_amd64",
+            "ci_base_linux_arm64"
           ],
           "explicitRootModuleDirectDevDeps": [],
           "useAllRepos": "NO",

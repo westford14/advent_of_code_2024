@@ -66,11 +66,21 @@ oci = use_extension("@rules_oci//oci:extensions.bzl", "oci")
 # we can define more base images here if needed.
 oci.pull(
     name = "go_base",
-    digest = "sha256:ccaef5ee2f1850270d453fdf700a5392534f8d1a8ca2acda391fbb6a06b81c86",
-    image = "gcr.io/distroless/base",
+    digest = "sha256:e9d0321de8927f69ce20e39bfc061343cce395996dfc1f0db6540e5145bc63a5",
+    image = "gcr.io/distroless/base-debian12",
+    platforms = [
+        "linux/amd64",
+        "linux/arm64/v8",
+    ],
+)
+use_repo(oci, "go_base", "go_base_linux_amd64", "go_base_linux_arm64_v8")
+oci.pull(
+    name = "ci_base",
+    digest = "sha256:f906812e309afbb97ecdc4bdbe577f2f315e99f3bc3b03b3df6507e92bb804ab",
+    image = "docker.io/cimg/base",
     platforms = [
         "linux/amd64",
         "linux/arm64",
     ],
 )
-use_repo(oci, "go_base", "go_base_linux_amd64", "go_base_linux_arm64")
+use_repo(oci, "ci_base", "ci_base_linux_amd64", "ci_base_linux_arm64")
