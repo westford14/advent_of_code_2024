@@ -66,11 +66,44 @@ oci = use_extension("@rules_oci//oci:extensions.bzl", "oci")
 # we can define more base images here if needed.
 oci.pull(
     name = "go_base",
-    digest = "sha256:ccaef5ee2f1850270d453fdf700a5392534f8d1a8ca2acda391fbb6a06b81c86",
-    image = "gcr.io/distroless/base",
+    digest = "sha256:e9d0321de8927f69ce20e39bfc061343cce395996dfc1f0db6540e5145bc63a5",
+    image = "gcr.io/distroless/base-debian12",
+    platforms = [
+        "linux/amd64",
+        "linux/arm64/v8",
+    ],
+)
+use_repo(oci, "go_base", "go_base_linux_amd64", "go_base_linux_arm64_v8")
+oci.pull(
+    name = "ci_base",
+    digest = "sha256:f906812e309afbb97ecdc4bdbe577f2f315e99f3bc3b03b3df6507e92bb804ab",
+    image = "docker.io/cimg/base",
     platforms = [
         "linux/amd64",
         "linux/arm64",
     ],
 )
-use_repo(oci, "go_base", "go_base_linux_amd64", "go_base_linux_arm64")
+use_repo(oci, "ci_base", "ci_base_linux_amd64", "ci_base_linux_arm64")
+
+http_file = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_file")
+
+http_file(
+    name = "bazel_remote_darwin_arm64",
+    executable = True,
+    sha256 = "d9b15c751dde2c796fd5895a9c533bcf6ce93206b5c3a17647877650630b0d07",
+    url = "https://github.com/buchgr/bazel-remote/releases/download/v2.4.4/bazel-remote-2.4.4-darwin-arm64",
+)
+
+http_file(
+    name = "bazel_remote_linux_arm64",
+    executable = True,
+    sha256 = "ed88b72ee394bc0d971f8cecac932e0faa791978691cde843fd8421ef6a01de9",
+    url = "https://github.com/buchgr/bazel-remote/releases/download/v2.4.4/bazel-remote-2.4.4-linux-arm64",
+)
+
+http_file(
+    name = "bazel_remote_linux_x86_64",
+    executable = True,
+    sha256 = "8679a76074b1408a95d2b3ec0f5b1a6d0c20500cfc24c3a87ef08c1b60200f8c",
+    url = "https://github.com/buchgr/bazel-remote/releases/download/v2.4.4/bazel-remote-2.4.4-linux-x86_64",
+)

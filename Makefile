@@ -18,3 +18,11 @@ gen:
 proto:
 	bazel build //proto/...
 	bazel query "attr(name, '.*proto_link$$', //...)" | xargs -I {} bazel run {}
+
+.PHONY: test
+test:
+	bazel test //... --test_output=all
+
+.PHONY: build
+build:
+	bazel build //...

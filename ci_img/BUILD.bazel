@@ -1,0 +1,52 @@
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_load", "oci_push")
+load("@rules_pkg//:pkg.bzl", "pkg_tar")
+
+sh_binary(
+    name = "bazel-remote",
+    srcs = select({
+        "@bazel_tools//src/conditions:darwin_arm64": ["@bazel_remote_darwin_arm64//file"],
+        "@bazel_tools//src/conditions:linux_x86_64": ["@bazel_remote_linux_x86_64//file"],
+        "@bazel_tools//src/conditions:linux_aarch64": ["@bazel_remote_linux_arm64//file"],
+    }),
+    visibility = ["//visibility:public"],
+)
+
+sh_binary(
+    name = "entrypoint",
+    srcs = ["entrypoint.sh"],
+    visibility = ["//visibility:public"],
+)
+
+pkg_tar(
+    name = "bazel-tar",
+    srcs = [":bazel-remote"],
+)
+
+pkg_tar(
+    name = "entry-tar",
+    srcs = [":entrypoint"],
+)
+
+oci_image(
+    name = "ci-image",
+    base = "@ci_base",
+    entrypoint = ["/entrypoint.sh"],
+    tars = [
+        ":bazel-tar",
+        ":entry-tar",
+    ],
+)
+
+oci_load(
+    name = "load",
+    image = ":ci-image",
+    repo_tags = ["bazel-ci-image:latest"],
+)
+
+# Need to create this repo to work
+oci_push(
+    name = "push_image",
+    image = ":ci-image",
+    remote_tags = ["bogus"],
+    repository = "703712742941.dkr.ecr.us-west-2.amazonaws.com/bazel-remote",
+)

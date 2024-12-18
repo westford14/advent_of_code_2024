@@ -2,12 +2,6 @@
 
 ## Bazel
 
-* bazel run //bzl_tools/go_fix:go_fix
-* bazel run @rules_go//go mod tidy
-* bazel mod tidy
-* bazel run //:gazelle
-* bazel run //:buildifier.check
-* bazel build //...
-* bazel test //... --test_output=all
-* bazel build //proto/...
-* bazel query "attr(name, '.*proto_link$$', //...)" | xargs -I {} bazel run {}
+* make fix
+* make gen
+* make test
