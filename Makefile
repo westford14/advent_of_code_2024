@@ -22,3 +22,7 @@ proto:
 .PHONY: test
 test:
 	bazel test //... --test_output=all
+
+.PHONY: build
+build:
+	bazel build //...

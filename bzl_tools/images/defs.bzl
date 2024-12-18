@@ -1,9 +1,8 @@
 """Rules and macros for building and pushing images"""
 
-load("@aspect_bazel_lib//lib:expand_template.bzl", "expand_template_rule")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_load", "oci_push")
 
-def docker_image(name, entrypoint, tars, service_name, image_name, base = "@go_base"):
+def docker_image(name, entrypoint, tars, image_name, base = "@go_base"):
     """Macro for all the dodads needed for an image.
 
     This creates rules for building, loading and pushing images,
@@ -13,7 +12,6 @@ def docker_image(name, entrypoint, tars, service_name, image_name, base = "@go_b
         name: name
         entrypoint: Entrypoint for your image
         tars: tars to be included in your image
-        service_name: Name for your service
         image_name: ECR repo name, should usually be the same as service_name
         base: Base image
     """

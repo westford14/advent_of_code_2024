@@ -23,7 +23,7 @@ jobs:
           sudo mv ./bazelisk /usr/local/bin/bazel
 
       - name: build bazel
-        run: bazel build //...
+        run: make build
 
       - name: gazelle
         run: |
@@ -37,4 +37,4 @@ jobs:
         run: bazel run //:buildifier.check
 
       - name: test
-        run: bazel test //... --test_output=all
+        run: make test

@@ -84,3 +84,26 @@ oci.pull(
     ],
 )
 use_repo(oci, "ci_base", "ci_base_linux_amd64", "ci_base_linux_arm64")
+
+http_file = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_file")
+
+http_file(
+    name = "bazel_remote_darwin_arm64",
+    executable = True,
+    sha256 = "d9b15c751dde2c796fd5895a9c533bcf6ce93206b5c3a17647877650630b0d07",
+    url = "https://github.com/buchgr/bazel-remote/releases/download/v2.4.4/bazel-remote-2.4.4-darwin-arm64",
+)
+
+http_file(
+    name = "bazel_remote_linux_arm64",
+    executable = True,
+    sha256 = "ed88b72ee394bc0d971f8cecac932e0faa791978691cde843fd8421ef6a01de9",
+    url = "https://github.com/buchgr/bazel-remote/releases/download/v2.4.4/bazel-remote-2.4.4-linux-arm64",
+)
+
+http_file(
+    name = "bazel_remote_linux_x86_64",
+    executable = True,
+    sha256 = "8679a76074b1408a95d2b3ec0f5b1a6d0c20500cfc24c3a87ef08c1b60200f8c",
+    url = "https://github.com/buchgr/bazel-remote/releases/download/v2.4.4/bazel-remote-2.4.4-linux-x86_64",
+)
