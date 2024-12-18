@@ -1,0 +1,17 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "day9",
+    srcs = ["day9.go"],
+    importpath = "github.com/westford14/advent_of_code_2024/internal/day9",
+    visibility = ["//:__subpackages__"],
+)
+
+go_test(
+    name = "day9_test",
+    srcs = ["day9_test.go"],
+    data = glob([
+        "data/**",
+    ]),
+    embed = [":day9"],
+)
